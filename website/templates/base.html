@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sheng Siong</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/tab_logo.png') }}">
+    <!--  Font  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+    <!-- Addressing autocomplete API ting-->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key }}&libraries=places&callback=initAutocomplete"
+      async
+      defer
+    ></script>
+
+</head>
+<body class="{{ page_class }}">
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %}
+<div class="flash-container">
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} flash-message" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+      <defs>
+        <symbol xmlns="http://www.w3.org/2000/svg" id="link" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M12 19a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm5 0a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm0-4a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm-5 0a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm7-12h-1V2a1 1 0 0 0-2 0v1H8V2a1 1 0 0 0-2 0v1H5a3 3 0 0 0-3 3v14a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V6a3 3 0 0 0-3-3Zm1 17a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9h16Zm0-11H4V6a1 1 0 0 1 1-1h1v1a1 1 0 0 0 2 0V5h8v1a1 1 0 0 0 2 0V5h1a1 1 0 0 1 1 1ZM7 15a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm0 4a1 1 0 1 0-1-1a1 1 0 0 0 1 1Z"/>
+        </symbol>
+        <symbol xmlns="http://www.w3.org/2000/svg" id="arrow-right" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M17.92 11.62a1 1 0 0 0-.21-.33l-5-5a1 1 0 0 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1 1 0 0 0 0 1.42a1 1 0 0 0 1.42 0l5-5a1 1 0 0 0 .21-.33a1 1 0 0 0 0-.76Z"/>
+        </symbol>
+        <symbol xmlns="http://www.w3.org/2000/svg" id="category" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M19 5.5h-6.28l-.32-1a3 3 0 0 0-2.84-2H5a3 3 0 0 0-3 3v13a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-10a3 3 0 0 0-3-3Zm1 13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-13a1 1 0 0 1 1-1h4.56a1 1 0 0 1 .95.68l.54 1.64a1 1 0 0 0 .95.68h7a1 1 0 0 1 1 1Z"/>
+        </symbol>
+        <symbol xmlns="http://www.w3.org/2000/svg" id="calendar" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M19 4h-2V3a1 1 0 0 0-2 0v1H9V3a1 1 0 0 0-2 0v1H5a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3Zm1 15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-7h16Zm0-9H4V7a1 1 0 0 1 1-1h2v1a1 1 0 0 0 2 0V6h6v1a1 1 0 0 0 2 0V6h2a1 1 0 0 1 1 1Z"/>
+        </symbol>
+        <symbol xmlns="http://www.w3.org/2000/svg" id="heart" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M20.16 4.61A6.27 6.27 0 0 0 12 4a6.27 6.27 0 0 0-8.16 9.48l7.45 7.45a1 1 0 0 0 1.42 0l7.45-7.45a6.27 6.27 0 0 0 0-8.87Zm-1.41 7.46L12 18.81l-6.75-6.74a4.28 4.28 0 0 1 3-7.3a4.25 4.25 0 0 1 3 1.25a1 1 0 0 0 1.42 0a4.27 4.27 0 0 1 6 6.05Z"/>
+        </symbol>
+        <symbol xmlns="http://www.w3.org/2000/svg" id="plus" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M19 11h-6V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2Z"/>
+        </symbol>
+        <symbol xmlns="http://www.w3.org/2000/svg" id="minus" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M19 11H5a1 1 0 0 0 0 2h14a1 1 0 0 0 0-2Z"/>
+        </symbol>
+        <symbol xmlns="http://www.w3.org/2000/svg" id="cart" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M8.5 19a1.5 1.5 0 1 0 1.5 1.5A1.5 1.5 0 0 0 8.5 19ZM19 16H7a1 1 0 0 1 0-2h8.491a3.013 3.013 0 0 0 2.885-2.176l1.585-5.55A1 1 0 0 0 19 5H6.74a3.007 3.007 0 0 0-2.82-2H3a1 1 0 0 0 0 2h.921a1.005 1.005 0 0 1 .962.725l.155.545v.005l1.641 5.742A3 3 0 0 0 7 18h12a1 1 0 0 0 0-2Zm-1.326-9l-1.22 4.274a1.005 1.005 0 0 1-.963.726H8.754l-.255-.892L7.326 7ZM16.5 19a1.5 1.5 0 1 0 1.5 1.5a1.5 1.5 0 0 0-1.5-1.5Z"/>
+        </symbol>
+        <symbol xmlns="http://www.w3.org/2000/svg" id="check" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M18.71 7.21a1 1 0 0 0-1.42 0l-7.45 7.46l-3.13-3.14A1 1 0 1 0 5.29 13l3.84 3.84a1 1 0 0 0 1.42 0l8.16-8.16a1 1 0 0 0 0-1.47Z"/>
+        </symbol>
+        <symbol xmlns="http://www.w3.org/2000/svg" id="trash" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M10 18a1 1 0 0 0 1-1v-6a1 1 0 0 0-2 0v6a1 1 0 0 0 1 1ZM20 6h-4V5a3 3 0 0 0-3-3h-2a3 3 0 0 0-3 3v1H4a1 1 0 0 0 0 2h1v11a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8h1a1 1 0 0 0 0-2ZM10 5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1h-4Zm7 14a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V8h10Zm-3-1a1 1 0 0 0 1-1v-6a1 1 0 0 0-2 0v6a1 1 0 0 0 1 1Z"/>
+        </symbol>
+        <symbol xmlns="http://www.w3.org/2000/svg" id="star-outline" viewBox="0 0 15 15">
+          <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M7.5 9.804L5.337 11l.413-2.533L4 6.674l2.418-.37L7.5 4l1.082 2.304l2.418.37l-1.75 1.793L9.663 11L7.5 9.804Z"/>
+        </symbol>
+        <symbol xmlns="http://www.w3.org/2000/svg" id="star-solid" viewBox="0 0 15 15">
+          <path fill="currentColor" d="M7.953 3.788a.5.5 0 0 0-.906 0L6.08 5.85l-2.154.33a.5.5 0 0 0-.283.843l1.574 1.613l-.373 2.284a.5.5 0 0 0 .736.518l1.92-1.063l1.921 1.063a.5.5 0 0 0 .736-.519l-.373-2.283l1.574-1.613a.5.5 0 0 0-.283-.844L8.921 5.85l-.968-2.062Z"/>
+        </symbol>
+        <symbol xmlns="http://www.w3.org/2000/svg" id="search" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"/>
+        </symbol>
+        <symbol xmlns="http://www.w3.org/2000/svg" id="user" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M15.71 12.71a6 6 0 1 0-7.42 0a10 10 0 0 0-6.22 8.18a1 1 0 0 0 2 .22a8 8 0 0 1 15.9 0a1 1 0 0 0 1 .89h.11a1 1 0 0 0 .88-1.1a10 10 0 0 0-6.25-8.19ZM12 12a4 4 0 1 1 4-4a4 4 0 0 1-4 4Z"/>
+        </symbol>
+        <symbol xmlns="http://www.w3.org/2000/svg" id="close" viewBox="0 0 15 15">
+          <path fill="currentColor" d="M7.953 3.788a.5.5 0 0 0-.906 0L6.08 5.85l-2.154.33a.5.5 0 0 0-.283.843l1.574 1.613l-.373 2.284a.5.5 0 0 0 .736.518l1.92-1.063l1.921 1.063a.5.5 0 0 0 .736-.519l-.373-2.283l1.574-1.613a.5.5 0 0 0-.283-.844L8.921 5.85l-.968-2.062Z"/>
+        </symbol>
+      </defs>
+    </svg>
+
+<!--Bootstrap header-->
+{% if not hide_navbar %}
+{% if not signup %}
+<header class="p-3 text-bg-dark" id="header">
+    <div class="container d-flex align-items-center justify-content-start">
+        <!--Logo-->
+        <a href="/" class="align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+            <img class="logo" src="{{ url_for('static', filename='images/sheng_logo.png') }}" alt="Logo"
+                 height="50px">
+        </a>
+
+        <!-- Navbar Toggle Button for Small Screens -->
+        <button class="navbar-toggler custom-toggler" type="button" id="sidebarToggle" aria-label="Toggle navigation">
+            <i class="bi bi-list"></i>
+        </button>
+
+        <div class="header-elements d-flex align-items-center justify-content-between">
+
+            <!--Address section in nav-->
+            <div class="delivery-container">
+                <div class="delivery-text">Delivery</div>
+                <button type="button" id="deliveryButton" class="btn btn-outline-light address-btn"
+                        data-bs-toggle="modal"
+                        data-bs-target="#addressModal">
+                    {{ session.get('guest_postal_code') or session.get('guest_address', 'Your address') if not
+                    current_user.is_authenticated else current_user.address | regex_search('\\d{6}$') or 'Enter your
+                    address' }}
+                    <i class="bi bi-geo-alt-fill"></i>
+                </button>
+            </div>
+
+            <!--    Search Bar       -->
+            <form class="d-flex w-50 mb-3 mb-lg-0 me-lg-3" id="searchbar" role="search">
+                <input type="search" class="form-control form-control-dark text-bg-dark search-bar"
+                       placeholder="Search..." aria-label="Search">
+            </form>
+
+            <!-- Signup and Cart -->
+            <div class="d-flex align-items-center gap-4">
+                <div class="d-flex align-items-center me-4"> <!-- Moves cart away from signup -->
+                    <div class="nav-item dropdown">
+
+                        <!-- Cart icon and badge-->
+                        <a class="nav-link d-flex align-items-center gap-1" href="#" id="cartDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-cart" style="font-size: 1.5rem;"></i> <!-- Cart Icon -->
+                            <span>Cart</span> <!-- Cart Text -->
+                            <span class="badge bg-danger position-absolute translate-middle p-1"
+                                  id="cart-count">0</span>
+                        </a>
+
+                        <!--Cart dropdown content-->
+
+                        <ul class="dropdown-menu dropdown-menu-end p-3" aria-labelledby="cartDropdown"
+                            id="cart-dropdown">
+
+                            <!-- Cart Summary -->
+                            <div class="cart-summary border-bottom p-2">
+                                <strong><span id="cart-total-items">0 items in your basket</span></strong>
+                                <br>
+                                <strong><span id="cart-total-price">S$0.00</span></strong>
+                            </div>
+
+                        <!--Appended cart items-->
+                            <li class="text-center text-muted">Your cart is empty</li>
+                        </ul>
+                    </div>
+                </div>
+
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('main.dashboard') }}" class="btn-signup">
+                    <i class="bi bi-person"></i> {{ current_user.first_name }}
+                </a>
+                <a href="{{ url_for('main.logout') }}" class="btn-signup">
+                    Logout
+                </a>
+                {% else %}
+                <a href="{{ url_for('main.signup') }}" class="btn-signup">
+                    <i class="bi bi-person"></i> Sign up
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <span class="close-btn" id="closeSidebar">&times;</span>
+
+    <ul class="sidebar-menu">
+        {% if current_user.is_authenticated %}
+            <li class="sidebar-item">
+                <a href="{{ url_for('main.dashboard') }}" class="sidebar-link">
+                    {{ current_user.username or "Dashboard" }}
+                </a>
+            </li>
+        {% else %}
+            <li class="sidebar-item">
+                <a href="{{ url_for('main.signup') }}" class="sidebar-link">Sign Up</a>
+            </li>
+        {% endif %}
+    </ul>
+</div>
+
+    <!--Navbar underline-->
+    <div id="header-underline"></div>
+
+</header>
+
+        <!-- Sidebar Backdrop -->
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+{% endif %}
+{% endif %}
+<!-- Modal -->
+<div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addressModalLabel">Enter Address</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addressForm">
+                    <input
+                            type="text"
+                            id="addressInput"
+                            class="form-control"
+                            placeholder="Your address"
+                            value="{{ session.get('postal_code', session.get('guest_address', '') if not current_user.is_authenticated else current_user.address or '') }}"
+
+                    >
+
+                    <p id="addressFeedback" class="mt-2" style="display: none;">Please enter a valid address.</p>
+                    <button type="submit" id="saveAddressBtn" class="btn btn-primary mt-2">Save Address</button>
+                    <button type="button" id="useLocationBtn" class="btn btn-primary mt-2">Use My Current Location</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% block content %}
+{% endblock %}
+
+
+{% if not hide_footer %}
+<!-- Footer 2 - Bootstrap Brain Component -->
+<footer class="footer custom-footer-bg">
+
+  <!-- Widgets - Bootstrap Brain Component -->
+  <section class="py-4 py-md-5 py-xl-8 border-top border-light">
+    <div class="container overflow-hidden">
+      <div class="row gy-4 gy-lg-0 justify-content-xl-between">
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2">
+          <div class="widget">
+            <a href="#!">
+              <img src="{{ url_for('static', filename='images/sheng_logo.png') }}" alt="Logo"
+                     height="55px">
+            </a>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2">
+          <div class="widget">
+            <h4 class="widget-title mb-4">Get in Touch</h4>
+            <address class="mb-4">Sheng Siong, 6 Mandai Link, Singapore 728652</address>
+            <p class="mb-1">
+              <a class="text-decoration-none footer-link" href="/">+65 6895 1888 <br>(8:30am – 5:00pm, Mon-Fri
+                  except Public Holidays)</a>
+            </p> <br>
+            <p class="mb-0">
+              <a class="text-decoration-none footer-link" href="mailto:demo@yourdomain.com">contact@shengsiong.com.sg</a>
+            </p>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2">
+          <div class="widget">
+            <h4 class="widget-title mb-4">Learn More</h4>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <a href="#!" class="text-decoration-none footer-link">About</a>
+              </li>
+              <li class="mb-2">
+                <a href="#!" class="text-decoration-none footer-link">Contact Us</a>
+              </li>
+              <li class="mb-2">
+                <a href="#!" class="text-decoration-none footer-link">Corporate</a>
+              </li>
+              <li class="mb-2">
+                <a href="#!" class="text-decoration-none footer-link">Blog</a>
+              </li>
+              <li class="mb-0">
+                <a href="#!" class="text-decoration-none footer-link">Privacy Policy</a>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+
+         <div class="col-12 col-md-4 col-lg-3 col-xl-2">
+          <div class="widget">
+            <h4 class="widget-title mb-4">Useful Links</h4>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <a href="#!" class="text-decoration-none footer-link">FAQs</a>
+              </li>
+              <li class="mb-2">
+                <a href="#!" class="text-decoration-none footer-link">Store Locator</a>
+              </li>
+              <li class="mb-2">
+                <a href="#!" class="text-decoration-none footer-link">The Sheng Siong Show</a>
+              </li>
+              <li class="mb-2">
+                <a href="#!" class="text-decoration-none footer-link">SS Connect</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Copyright - Bootstrap Brain Component -->
+  <div class="py-4 py-md-5 py-xl-8 border-top border-light-subtle bottom-half-footer">
+    <div class="container overflow-hidden">
+      <div class="row gy-4 gy-md-0 align-items-md-center">
+        <div class="col-xs-12 col-md-7 order-1 order-md-0">
+          <div class="copyright text-center text-md-start">
+            &copy; ShengShiong. All Rights Reserved.
+          </div>
+          <div class="credits text-secondary text-center text-md-start mt-2 fs-8">
+            <a href="https://bootstrapbrain.com/" class="link-secondary text-decoration-none"></a>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-md-5 order-0 order-md-1">
+          <div class="social-media-wrapper">
+            <ul class="list-unstyled m-0 p-0 d-flex justify-content-center justify-content-md-end">
+              <li class="me-3">
+                <a href="#!" class="link-dark link-opacity-75-hover">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
+                    <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+                  </svg>
+                </a>
+              </li>
+
+              <li class="">
+                <a href="#!" class="link-dark link-opacity-75-hover">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
+                    <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z" />
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</footer>
+
+{% endif %}
+
+<!--bootstrap cdm and custom css links-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!--custom js and css-->
+<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+<script src="{{ url_for('static', filename='js/base.js') }}"></script>
+
+
+
+
+
+<!--Custom CSS for specific pages-->
+{% block page_specific_styles %}
+{% if page_name == 'index' %}
+<link href="{{ url_for('static', filename='css/landingpage_style.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/normalize.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/vendor.css') }}">
+
+{% elif page_name == 'signup' %}
+<link href="{{ url_for('static', filename='css/signUp.css') }}" rel="stylesheet">
+
+{% elif page_name == 'dashboard' %}
+<link href="{{ url_for('static', filename='css/user_dashboard.css') }}" rel="stylesheet">
+
+{% elif page_name == 'contact' %}
+<link href="{{ url_for('static', filename='css/user_dashboard.css') }}" rel="stylesheet">
+
+{% elif page_name == 'filter' %}
+<link href="{{ url_for('static', filename='css/landingpage_style.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/normalize.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/vendor.css') }}">
+<link href="{{ url_for('static', filename='css/filterpage.css') }}" rel="stylesheet">
+
+{% elif page_name == 'login' %}
+<link href="{{ url_for('static', filename='css/signUp.css') }}" rel="stylesheet">
+{% endif %}
+{% endblock %}
+
+
+
+{% block page_specific_scripts %}
+     <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+    {% if page_name == 'index' %}
+    <script src="{{ url_for('static', filename='js/jquery-1.11.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+    {% elif page_name == 'dashboard' %}
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/NEW_cart.js') }}"></script>
+
+
+
+    {% elif page_name == 'filter' %}
+    <script src="{{ url_for('static', filename='js/jquery-1.11.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+    {% elif page_name == 'contact' %}
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+
+    {% elif page_name == 'NEW_cart' %}
+    <script src="{{ url_for('static', filename='js/NEW_cart.js') }}"></script>
+
+    {% elif page_name == 'checkout' %}
+    <script src="{{ url_for('static', filename='js/checkout.js') }}"></script>
+    {% endif %}
+
+
+
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Shop by Category & Price</h2>
+
+    <div class="row">
+        <!-- Filter Sidebar -->
+        <div class="col-md-3 sticky-sidebar">
+            <form id="filterForm" method="GET" action="{{ url_for('main.filter_products') }}" class="p-3 border rounded bg-white shadow-sm">
+
+
+                <h4 class="fw-bold">Category</h4>
+                {% set categories = ["vegetables", "beverages", "seafood", "fruits", "dairy", "canned food", "alcohol", "snacks", "frozen food", "household essentials"] %}
+                {% for category in categories %}
+                <div class="form-check">
+                    <input type="checkbox" id="{{ category | lower | replace(' ', '_') }}" name="category" value="{{ category }}"
+                        {% if category in selected_categories %} checked {% endif %}>
+                    <label for="{{ category | lower | replace(' ', '_') }}">{{ category }}</label>
+                </div>
+                {% endfor %}
+
+                <h4 class="fw-bold mt-4">Price Range</h4>
+                <div class="d-flex gap-2">
+                    <input type="number" id="min_price" name="min_price" class="form-control" placeholder="Min Price" value="{{ min_price }}" min="1">
+                    <input type="number" id="max_price" name="max_price" class="form-control" placeholder="Max Price" value="{{ max_price }}" min="1">
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-3 w-100">Apply Filters</button>
+            </form>
+        </div>
+
+        <!-- Product Display -->
+        <div class="col">
+            <div class="row" id="productContainer">
+                {% for product in products %}
+                <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
+                    <div class="product-item">
+                        <span class="badge bg-success position-absolute m-2">-30%</span>
+                        <a href="#" class="btn-wishlist position-absolute top-0 end-0 m-2">
+                            <svg width="24" height="24">
+                                <use xlink:href="#heart"></use>
+                            </svg>
+                        </a>
+                        <figure class="my-3 text-center">
+                            <a href="#" title="{{ product.name }}">
+                                <img src="{{ url_for('static', filename='images/' + product.image) }}" class="tab-image">
+                            </a>
+                        </figure>
+
+                        <h3 class="fw-bold">{{ product.name }}</h3>
+
+                        <div class="d-flex align-items-center justify-content-between px-3">
+                            <span class="qty">1 Unit</span>
+                            <span class="rating">
+                                <svg width="14" height="14" class="text-primary"><use xlink:href="#star-solid"></use></svg>
+                                4.5
+                            </span>
+                        </div>
+
+                        <span class="price fw-bold">${{ product.price }}</span>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="input-group product-qty d-flex flex-nowrap">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="quantity-left-minus btn btn-danger btn-number"
+                                            data-type="minus">
+                                        <svg width="16" height="16">
+                                            <use xlink:href="#minus"></use>
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <input type="number" id="quantity_{{ product.id }}"
+                                       class="form-control input-number text-center"
+                                       value="1" min="1" max="50" style="max-width: 60px; min-width: 45px; height: 38px; text-align: center; flex: 1;">
+
+                                <div class="input-group-append">
+                                    <button type="button" class="quantity-right-plus btn btn-success btn-number"
+                                            data-type="plus">
+                                        <svg width="16" height="16">
+                                            <use xlink:href="#plus"></use>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary add-to-cart ms-2 flex-shrink-0"
+                                    data-id="{{ product.id }}"
+                                    data-name="{{ product.name }}"
+                                    data-price="{{ product.price }}"
+                                    data-image="{{ url_for('static', filename='images/' + product.image) }}">
+                                Add to Cart
+                            </button>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript to Handle Filtering -->
+<script>
+document.getElementById("filterForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // Prevent page refresh
+
+    let categories = [];
+    document.querySelectorAll("input[name='category']:checked").forEach((checkbox) => {
+        categories.push(encodeURIComponent(checkbox.value));
+    });
+
+    const min_price = document.getElementById("min_price").value;
+    const max_price = document.getElementById("max_price").value;
+
+    let queryParams = `?min_price=${min_price}&max_price=${max_price}`;
+
+    if (categories.length > 0) {
+        queryParams += `&category=${categories.join("&category=")}`;
+    }
+
+    window.location.href = "{{ url_for('main.filter_products') }}" + queryParams;
+});
+
+</script>
+{% endblock %}

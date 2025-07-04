@@ -1,0 +1,149 @@
+/* Reset default margins and paddings */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #FFFFFF;
+}
+
+/* Logo Styling */
+.logo-container img {
+    max-width: 390px; /* Slightly reduced for better mobile compatibility */
+    max-height: 390px; /* Maintain a proportional size */
+    width: auto; /* Maintain aspect ratio */
+    height: auto; /* Maintain aspect ratio */
+    margin-bottom: 5px; /* Adjust spacing below the logo */
+}
+
+/* Full-page section layout */
+.full-page {
+    display: flex; /* Side-by-side layout */
+    width: 100%;
+    height: 100vh; /* Full viewport height */
+    margin: 0;
+    padding: 0;
+    gap: 0; /* Eliminate any gap between flex children */
+    flex-wrap: nowrap; /* Ensure no wrapping unless specified */
+}
+
+/* Left and Right Panels */
+.left-panel,
+.right-panel {
+    width: 50%; /* Split the viewport equally */
+    height: 100%; /* Full height */
+}
+
+.left-panel {
+    background: url('{{ url_for('static', filename='images/loginimg.png') }}') no-repeat center center;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+}
+
+.right-panel {
+    background-color: #ffffff; /* White background */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center the form vertically */
+    align-items: center; /* Center the form horizontally */
+    box-sizing: border-box; /* Include padding in dimensions */
+    padding: 0 30px; /* More balanced padding */
+    padding-right: 150px;
+}
+
+/* Form styles */
+form {
+    width: 100%;
+    max-width: 400px; /* Limit the form's width */
+}
+
+form .form-control {
+    margin-bottom: 15px;
+    padding: 12px; /* Slightly larger padding for better touch targets */
+    font-size: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+}
+
+form .btn {
+    padding: 12px;
+    font-size: 1rem;
+    margin: 15px 0;
+    border-radius: 5px; /* Match input fields */
+}
+
+.password-strength-container {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out, height 0.1s ease-in-out;
+    height: 0;
+    overflow: hidden;
+}
+
+.password-strength-container.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    height: auto;
+}
+
+
+
+
+
+
+
+#passwordStrengthBar {
+    width: 100%;
+    height: 6px;
+    background-color: #ddd;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+#passwordStrengthFill {
+    height: 100%;
+    width: 0%;
+    background-color: red;
+    border-radius: 4px;
+    transition: width 0.3s ease-in-out;
+}
+
+.password-requirements {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 5px;
+}
+
+.password-requirements li {
+    font-size: 14px;
+}
+
+.valid {
+    color: green;
+}
+
+.invalid {
+    color: red;
+}
+
+
+
+/* Responsive design for small screens */
+@media (max-width: 768px) {
+    .full-page {
+        flex-direction: column; /* Stack panels vertically */
+        height: auto; /* Adjust height based on content */
+    }
+
+    .left-panel {
+        display: none; /* Hide the left panel */
+    }
+
+    .right-panel {
+        width: 100%; /* Take full width */
+        padding: 30px 20px; /* Adjust padding for smaller screens */
+    }
+}

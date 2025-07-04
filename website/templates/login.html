@@ -1,0 +1,30 @@
+
+{% extends 'base.html' %}
+{% set hide_navbar = True %}
+
+{% block content %}
+<section class="full-page">
+    <!-- Left Image Panel -->
+    <div class="left-panel">
+        <img src="{{ url_for('static', filename='images/loginimg2.png') }}" alt="placeholderimg" width="556" height="780">
+    </div>
+
+    <!-- Right Form Panel -->
+    <div class="right-panel">
+        <a href="/" class="logo-container text-center">
+            <img class="logo" src="{{ url_for('static', filename='images/sheng_logo.png') }}" alt="Logo"
+                 height="50px">
+        </a>
+        <h2 class="text-center">Login</h2>
+        <form action="{{ url_for('main.login') }}" method="POST">
+            <input type="email" class="form-control" name="email" placeholder="Email" required>
+            <input type="password" class="form-control" name="password" placeholder="Password" required>
+            <div class="form-check">
+                <p class="login-text">Don't have an account? <a href="{{ url_for('main.signup') }}" class="link-primary">Sign Up</a></p>
+                <p class="login-text">Are you an employee?<a href="{{ url_for('main.employee_login') }}" class="link-primary">Login here</a></p>
+            </div>
+            <button type="submit" class="btn btn-dark w-100">Login</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

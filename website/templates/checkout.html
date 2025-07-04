@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% set hide_navbar = True %}
+
+{% block content %}
+<div class="container position-absolute top-0 start-0 mt-2 ms-5">
+    <a href="/" class="text-decoration-none">
+        <img class="logo" src="{{ url_for('static', filename='images/sheng_logo.png') }}" alt="Logo"
+             style="height: 80px; width: auto;">
+    </a>
+</div>
+
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-7">
+            <!-- Checkout Form -->
+            <form id="checkout-form" method="POST" action="{{ url_for('main.checkout') }}">
+                <input type="hidden" id="confirmOrderUrl" value="{{ url_for('main.confirm_order') }}">
+
+                <!-- ✅ Delivery Address Section (With Collapsing Input Fields) -->
+                <div class="card p-4 shadow-sm" id="address-section">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5>📍 Add Delivery Address</h5>
+                        <a href="#" class="text-primary d-none" id="change-address">Change</a>
+                    </div>
+
+                    <!-- ✅ Inputs Wrapped in a Collapsible Div -->
+                    <div class="collapse show" id="address-form">
+                        <!-- Address Fields in Checkout -->
+                        <div class="mb-3">
+                            <label for="postal-code" class="form-label">Postal Code</label>
+                            <input type="text" id="postal-code" name="postal_code" class="form-control"
+                                   value="{{ saved_postal }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Full Address</label>
+                            <input type="text" id="address" name="address" class="form-control"
+                                   value="{{ saved_address }}" required>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="recipient-name" class="form-label">Recipient Name</label>
+                            <input type="text" id="recipient-name" name="recipient_name" class="form-control" required>
+                        </div>
+
+                        {% if not current_user.is_authenticated %}
+                        <div id="guest-email-container" class="mb-3">
+                            <label for="guest-email" class="form-label">Email Address</label>
+                            <input type="email" id="guest-email" name="guest_email" class="form-control" required>
+                        </div>
+                        {% endif %}
+
+
+                        <div class="mb-3">
+                            <label for="phone-number" class="form-label">Phone Number</label>
+                            <input type="text" id="phone-number" name="phone_number" class="form-control" required>
+                        </div>
+
+                        <!-- ✅ Save & Continue Button -->
+                        <button type="button" id="save-address" class="btn btn-primary w-100">Save & Continue</button>
+                    </div>
+                </div>
+
+
+                <!-- ✅ Payment Method Section (Starts Collapsed, but Always Visible) -->
+                <div class="card p-4 shadow-sm mt-3">
+                    <h5 class="collapsed-title">💳 Select Payment Method</h5>
+
+                    <div class="collapse" id="payment-section">
+                        <div class="mb-3">
+                            <label class="form-label">Payment Method</label>
+                            <select name="payment_method" id="payment-method" class="form-control" required>
+                                <option value="COD">Cash on Delivery</option>
+                                <option value="Card">Credit/Debit Card</option>
+                            </select>
+                        </div>
+
+                        <!-- ✅ Collapsible Credit Card Fields -->
+                        <div class="collapse" id="card-details" data-bs-parent="#payment-section">
+                            <div class="card card-body">
+                                <div class="position-relative">
+                                    <input type="text" id="card-number" placeholder="XXXX XXXX XXXX XXXX"
+                                           class="form-control pe-5">
+                                    <img id="card-icon" src="" alt="Card Logo"
+                                         class="position-absolute end-0 top-50 translate-middle-y me-3"
+                                         style="width: 40px; height: auto; display: none;">
+                                </div>
+
+
+                                <label for="expiry-date">Expiry Date (MM/YY)</label>
+                                <input type="text" id="expiry-date" placeholder="MM/YY" class="form-control">
+
+                                <label for="cvv">CVV</label>
+                                <input type="text" id="cvv" placeholder="XXX" class="form-control">
+                            </div>
+                        </div>
+
+                        <button id="submit-payment" type="submit" class="btn btn-primary mt-3">Proceed to Payment
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <!-- Order Summary Section -->
+        <div class="col-md-5">
+            <div class="card p-4 shadow-sm">
+                <h5>🛒 Order Summary</h5>
+                <div class="d-flex justify-content-between">
+                    <span>Subtotal</span>
+                    <strong id="summary-subtotal">$0.00</strong>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span>Delivery Fee</span>
+                    <strong id="summary-delivery">$10.00</strong>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span>Tax (9%)</span>
+                    <strong id="summary-tax">$0.00</strong> <!-- ✅ Tax row added -->
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <strong>Total</strong>
+                    <strong id="summary-total">$0.00</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,11 @@
+#cart-count {
+    right: -50px; /* Adjust to align properly */
+    top: 20px;
+    background-color: #3490BF !important;
+    color: white !important;
+    border-radius: 4px; /* Ensures perfect circle */
+    font-weight: bold;
+    opacity: 1 !important;
+    filter: brightness(1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Adds slight depth */
+}

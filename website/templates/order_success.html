@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% set hide_navbar = True %}
+
+{% block content %}
+<div class="container position-absolute top-0 start-0 mt-2 ms-5">
+    <a href="/" class="text-decoration-none">
+        <img class="logo" src="{{ url_for('static', filename='images/sheng_logo.png') }}" alt="Logo"
+             style="height: 80px; width: auto;">
+    </a>
+</div>
+
+<div class="container text-center py-5">
+    <h2>🎉 Order Placed Successfully!</h2>
+    <p>Your order has been confirmed. A confirmation email has been sent to you.</p>
+    <a href="{{ url_for('main.home') }}" class="btn btn-primary">Back to Home</a>
+</div>
+{% endblock %}

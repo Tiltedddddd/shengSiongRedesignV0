@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="list-group">
+                <a href="{{ url_for('main.dashboard') }}"
+                   class="list-group-item list-group-item-action {% if active_page == 'dashboard' %}active{% endif %}">
+                    Dashboard
+                </a>
+                <a href="{{ url_for('main.update') }}"
+                   class="list-group-item list-group-item-action {% if active_page == 'update_profile' %}active{% endif %}">
+                    Update Profile
+                </a>
+                <a href="{{ url_for('main.logout') }}"
+                   class="list-group-item list-group-item-action">
+                    Logout
+                </a>
+                <a href="{{ url_for('main.delete_account') }}"
+                   class="list-group-item list-group-item-action text-danger {% if active_page == 'delete_account' %}active{% endif %}">
+                    Delete Account
+                </a>
+            </div>
+
+
+        </div>
+
+        <!-- Right Panel Content -->
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-body">
+                    <h4>Welcome, {{ user.first_name }} {{ user.last_name }}</h4>
+                    <hr>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <p><strong>Address:</strong> {{ current_user.address or "No address provided" }}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

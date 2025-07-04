@@ -1,0 +1,497 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #F0F5F2;
+    padding-top: 100px;
+    }
+
+.logo{
+    margin-left: -60px;
+}
+
+/* header portion */
+header.p-3.text-bg-dark {
+    background-color: #F0F5F2 !important;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 90px;
+    padding-bottom: 10px; /*line gap*/
+    z-index: 1000;
+}
+
+#header .container {
+    display: flex;
+    align-items: center; /* Vertically align items */
+    justify-content: space-between; /* Spread items across the available space */
+}
+
+.header-elements {
+    display: flex;
+    align-items: center; /* Align content vertically */
+    flex-grow: 1; /* Allow this section to grow and fill the space */
+    justify-content: space-between; /* Spread elements evenly within this section */
+}
+
+
+
+.search-bar::placeholder {
+    color: black;
+    opacity: 1;
+}
+
+.search-bar:focus {
+    outline: none;
+    box-shadow: 0 0 5px #EDEDED;
+    border-color: #EDEDED;
+}
+
+header .search-bar {
+    background-color: #EDEDED !important;
+    color: black !important;
+}
+
+
+/*address delivery thing */
+.address-btn {
+    border: none;
+    outline: none;
+    color: #45AE22;
+    background-color: transparent; /* Transparent background */
+    padding: 0.5px 1px; /* Adjust padding to fit the text nicely */
+    font-size: 1rem; /* Adjust font size for the button text */
+    cursor: pointer; /* Indicate that it's clickable */
+}
+
+.address-btn:hover {
+    background-color: transparent;
+    color: #96EF62;
+}
+
+.delivery-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align text to the left */
+    justify-content: center;
+    padding-left: 2px;
+    margin-left: 40px; /* Add space between delivery and the next item */
+}
+
+.delivery-text {
+    display: block;
+    font-size: 1rem;
+    color: black;
+    margin-bottom: 0.2px;
+}
+
+
+
+
+
+
+/*Modal styling */
+.modal-title {
+    color: black;
+}
+
+.modal-backdrop {
+    z-index: 999; /* Ensure the backdrop appears above other content */
+}
+
+.modal-content {
+    z-index: 1060; /* Ensure modal content is above the backdrop */
+}
+
+/* Google Maps API */
+.pac-container {
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    z-index: 2000; /* Ensure the dropdown is above other elements */
+}
+
+.pac-item {
+    padding: 10px 15px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #333;
+}
+
+.pac-item:hover {
+    background-color: #f7f7f7;
+}
+
+.pac-icon {
+    display: none; /* Hide the default Google icon */
+}
+
+.pac-item-query {
+    font-weight: bold;
+}
+
+.pac-matched {
+    color: #45AE22;
+}
+
+
+
+
+/* Cart and Signup Links */
+.btn-signup, .btn-my-cart {
+    text-decoration: none; /* Remove default underline */
+    border: none;
+    background-color: transparent;
+    color: #1A577C; /* Keep original text color */
+    padding: 8px 16px; /* Ensure proper padding */
+    display: inline-block; /* Keeps spacing correct */
+}
+
+/* ✨ Hover and Focus Effect */
+.btn-signup:hover, .btn-my-cart:hover {
+    color: #1A577C; /* Keep consistent */
+    text-decoration: none; /* Prevent underline */
+}
+
+.btn-signup:focus, .btn-my-cart:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* 🛒 Ensure icons inside links are aligned */
+.btn-signup i, .btn-my-cart i {
+    margin-right: 5px; /* Adjust spacing if needed */
+}
+
+/* 🛒 Align cart icon and text properly */
+.nav-item .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 6px; /* Space between cart icon and text */
+    color: #1A577C; /* Matches navbar */
+    position: relative; /* Needed for badge positioning */
+    margin-right: 40px;
+}
+
+/* 🚀 Adjust spacing between Cart & Sign Up */
+.d-flex.align-items-center {
+    gap: 5px; /* Ensure spacing between cart and signup */
+}
+
+/*Ensure cart icon has correct size and color */
+.nav-item .bi-cart {
+    font-size: 1.5rem;
+    color: #1A577C;
+}
+
+/*Cart Summary - Aligns with dropdown */
+.cart-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+    background: transparent;
+    border-bottom: 1px solid #ddd;
+    padding: 10px; /* Ensure spacing */
+    color: black;
+}
+
+
+/*Dropdown Cart Styling */
+#cart-dropdown {
+    width: 350px;
+    max-height: 400px;
+    overflow-y: auto;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    background: white;
+    padding-top: 5px !important;
+}
+
+/* 🔴 Cart badge (Item Count) - Proper Positioning */
+#cart-count {
+    font-size: 0.75rem;
+    width: 28px; /* Ensures perfect circular shape */
+    height: 20px;
+    line-width: 5px;
+    line-height: 12.5px; /* Centers text vertically */
+    text-align: center;
+    position: absolute;
+    right: -50px; /* Adjust to align properly */
+    top: 24px;
+    background-color: #3490BF !important; /* Ensures solid red */
+    color: white !important;
+    border-radius: 4px; /* Ensures perfect circle */
+    font-weight: bold;
+    opacity: 1 !important;
+    filter: brightness(1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Adds slight depth */
+}
+
+/* 📌 Dropdown Styling */
+#cart-dropdown {
+    min-width: 250px; /* Ensures dropdown is wide enough */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds slight shadow */
+}
+
+/* 🛍️ Cart Dropdown Items */
+#cart-dropdown li {
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    color: black;
+}
+
+/* 🖼️ Cart Item Image */
+#cart-dropdown img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+/* ❌ Remove Button */
+.remove-from-cart {
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+
+
+
+
+/* Header Underline */
+#header-underline {
+    height: 0.5px;
+    background-color: #1A577C;
+    width: 75%; /* Initially a partial line */
+    transition: width 0.2s ease-in-out; /* Smooth transition */
+    margin: 18px auto;
+
+}
+
+.header-elements {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.header-elements.hide {
+    opacity: 0; /* Make invisible */
+    pointer-events: none; /* Disable interaction */
+}
+
+
+
+/* Sticky Header */
+header.sticky {
+    height: 0.5px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+
+
+/* Full-width underline when sticky */
+header.sticky #header-underline {
+    width: 100%;
+}
+
+@media (min-width: 1200px) {
+    header .custom-toggler {
+        display: none; /* Hide toggle button on larger screens */
+    }
+}
+
+@media (max-width: 1199px) {
+    .header-elements {
+        display: none !important; /* Hide by default on small screens */
+    }
+
+    .custom-toggler {
+        display: flex; /* Ensure the toggle button is visible */
+        justify-content: center;
+        align-items: center;
+        margin-left: auto;
+    }
+
+}
+
+
+
+/*Flash messages*/
+.flash-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1050;
+    width: 350px; /* Adjust width as needed */
+}
+
+.flash-message {
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.alert-success {
+    background-color: #28a745;
+}
+
+.alert-danger {
+    background-color: #dc3545;
+}
+
+.alert-info {
+    background-color: #17a2b8;
+}
+
+.alert-warning {
+    background-color: #ffc107;
+}
+
+footer.custom-footer-bg{
+    background-color: #E4F3FF;
+}
+
+footer.custom-footer-bg {
+    z-index: 1; /* Ensure it's above other elements */
+    position: relative; /* To respect the z-index */
+}
+
+footer .bottom-half-footer {
+    background-color: #C4DEF3;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -300px; /* Keep it hidden initially */
+    width: 280px;
+    height: 100%;
+    background: #ffffff; /* Light background */
+    box-shadow: -3px 0 10px rgba(0, 0, 0, 0.2);
+    transition: right 0.3s ease-in-out;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+
+/* When sidebar is open */
+.sidebar.show {
+    right: 0; /* Slide in */
+}
+
+.close-btn {
+    font-size: 24px;
+    cursor: pointer;
+    display: block;
+    text-align: right;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.sidebar-item {
+    padding: 12px 15px;
+    border-radius: 5px;
+    transition: background 0.2s ease-in-out;
+}
+
+.sidebar-link {
+    text-decoration: none;
+    font-size: 18px;
+    color: #333;
+    font-weight: 600;
+    display: block;
+}
+
+.sidebar-link:hover{
+    color: #72A0C1;
+}
+
+.sidebar-item:hover {
+    background: #f1f1f1;
+}
+
+
+.navbar-toggler {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background: none;
+    font-size: 1.5rem;
+    color: #1A577C;
+}
+
+.sidebar-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* Use 0.3 for a lighter overlay */
+    display: none; /* Initially hidden */
+    z-index: 800; /* Lower than sidebar (should not overlap navbar) */
+}
+
+ul.list-unstyled .footer-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul.list-unstyled .footer-link:hover {
+    color: #555;
+    text-decoration: underline;
+}
+
+/*Brendons manage products tag*/
+.category-tag {
+    display: inline-flex;
+    align-items: center;
+    background-color: #007bff;  /* Blue color */
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 15px;
+    margin: 5px;
+}
+
+.category-tag button {
+    background: none;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 8px;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+
+.category-tag button:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}

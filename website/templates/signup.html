@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="full-page">
+    <!-- Left Image Panel -->
+    <div class="left-panel">
+        <img src="{{ url_for('static', filename='images/loginimg.png') }}" alt="placeholderimg">
+    </div>
+
+    <!-- Right Form Panel -->
+    <div class="right-panel">
+        <a href="/" class="logo-container text-center">
+            <img class="logo" src="{{ url_for('static', filename='images/sheng_logo.png') }}" alt="Logo"
+                 height="50px">
+        </a>
+        <h2 class="text-center">Sign Up</h2>
+        <form action="{{ url_for('main.signup') }}" method="POST">
+            <input type="text" class="form-control" name="first_name" placeholder="First Name" required>
+            <input type="text" class="form-control" name="last_name" placeholder="Last Name" required>
+            <input type="email" class="form-control" name="email" placeholder="Email" required>
+            <!--Password-->
+            <div class="password-input-container">
+                <input type="password" class="form-control" name="password" id="password" placeholder="Password"
+                       required>
+            </div>
+
+            <!-- Password Strength Meter (Initially Hidden) -->
+            <div class="password-strength-container">
+                <small id="passwordStrengthText">Password strength: <span id="strengthValue">0%</span></small>
+                <div id="passwordStrengthBar">
+                    <div id="passwordStrengthFill"></div>
+                </div>
+
+                <ul class="password-requirements">
+                    <li id="lengthCheck" class="invalid">❌ At least 8 characters</li>
+                    <li id="lowercaseCheck" class="invalid">❌ At least one small letter</li>
+                    <li id="uppercaseCheck" class="invalid">❌ At least one capital letter</li>
+                    <li id="numberCheck" class="invalid">❌ At least one number or symbol</li>
+                </ul>
+            </div>
+
+            <div class="form-check">
+                <p class="login-text">Have an account? <a href="{{ url_for('main.login') }}" class="link-primary login-text">Login</a> </p>
+
+                <input class="form-check-input" type="checkbox" required>
+                <label class="form-check-label">
+                    I agree to the <a href="#!" class="link-primary">terms and conditions</a>
+                </label>
+            </div>
+            <button type="submit" class="btn btn-dark w-100">Sign Up</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

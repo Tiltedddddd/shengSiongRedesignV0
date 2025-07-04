@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <h2>📦 Confirm Your Order</h2>
+
+    <p><strong>Shipping Address:</strong> {{ address if address else "Not provided" }}</p>
+    <p><strong>Payment Method:</strong> {{ payment_method if payment_method else "Not selected" }}</p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Qty</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart %}
+            <tr>
+                <td>{{ item["name"] }}</td>
+                <td>{{ item["quantity"] }}</td>
+                <td>${{ item["price"] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <form action="{{ url_for('main.confirm_order') }}" method="POST">
+        <button type="submit" class="btn btn-success">Place Order</button>
+        <a href="{{ url_for('main.checkout') }}" class="btn btn-secondary">Back to Checkout</a>
+    </form>
+</div>
+{% endblock %}
